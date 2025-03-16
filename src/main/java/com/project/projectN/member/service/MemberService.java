@@ -16,4 +16,6 @@ public class MemberService {
 //        member.setMemberId(1);
         return memberRepository.save(member);
     }
+
+    public Member findMember()
 }
