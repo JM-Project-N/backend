@@ -1,4 +1,4 @@
-package com.project.socketio.event;
+package com.project.projectN.socketio.event;
 
 import com.corundumstudio.socketio.SocketIOServer;
 import org.springframework.stereotype.Component;

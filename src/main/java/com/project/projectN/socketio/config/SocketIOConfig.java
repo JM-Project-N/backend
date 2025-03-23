@@ -1,4 +1,4 @@
-package com.project.socketio.config;
+package com.project.projectN.socketio.config;
 import com.corundumstudio.socketio.SocketIOServer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

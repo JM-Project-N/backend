@@ -1,4 +1,4 @@
-package com.project.socketio.runner;
+package com.project.projectN.socketio.runner;
 import com.corundumstudio.socketio.SocketIOServer;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.DisposableBean;

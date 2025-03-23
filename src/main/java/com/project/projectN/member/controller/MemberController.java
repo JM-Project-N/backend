@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Validated
-@RequestMapping("/auth")
+@RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberController {
-    private final static String USER_DEFAULT_URL = "/auth";
+    private final static String USER_DEFAULT_URL = "/member";
     private final MemberMapper memberMapper;
     private final MemberService memberService;
 
-    @PostMapping("/signup/test")
+    @PostMapping("/test")
     public ResponseEntity signUpMemberTest(@Validated @RequestBody MemberDto.PostTest requestBody){
         System.out.println("테스트");
         Member member = memberMapper.userPostTestToUser(requestBody);
@@ -28,7 +28,7 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/signup")
+    @PostMapping
     public ResponseEntity signUpMember(@Validated @RequestBody MemberDto.Post requestBody){
         Member member = memberMapper.userPostToUser(requestBody);
         memberService.createUser(member);
