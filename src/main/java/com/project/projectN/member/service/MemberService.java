@@ -17,5 +17,5 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    public Member findMember()
+//    public Member findMember();
 }
