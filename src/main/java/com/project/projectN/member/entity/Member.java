@@ -16,29 +16,29 @@ public class Member extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "name", length = 100, nullable = false)
+    @Column(name = "name", length = 100)
     private String name;
 
-    @Column(name = "email", length = 100, nullable = false)
+    @Column(name = "email", length = 100)
     private String email;
 
-    @Column(name = "password", length = 100, nullable = false)
+    @Column(name = "password", length = 100)
     private String password;
 
-    @Column(name = "phone", length = 100, nullable = false)
+    @Column(name = "phone", length = 100)
     private String phone;
 
-    @Column(name = "gender", length = 100, nullable = false)
+    @Column(name = "gender", length = 100)
     private String gender;
 
-    @Column(name = "nickname", length = 100, nullable = false)
+    @Column(name = "nickname", length = 100)
     private String nickname;
 
-    @Column(name = "regist_type", length = 100, nullable = false)
+    @Column(name = "regist_type", length = 100)
     @Enumerated(value = EnumType.STRING)
     private RegistType registType = RegistType.GUEST;
 
-    @Column(name = "status", length = 100, nullable = false)
+    @Column(name = "status", length = 100)
     @Enumerated(value = EnumType.STRING)
     private Status status = Status.NORMAL;
 

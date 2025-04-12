@@ -21,7 +21,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/test")
-    public ResponseEntity signUpMemberTest(@Validated @RequestBody MemberDto.PostTest requestBody){
+    public ResponseEntity signUpMemberTest(@RequestBody MemberDto.TestPost requestBody){
         System.out.println("테스트");
         Member member = memberMapper.userPostTestToUser(requestBody);
         memberService.createUser(member);
