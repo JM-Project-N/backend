@@ -19,7 +19,7 @@ public class TeamController {
     private final TeamMapper mapper;
 
     @GetMapping("/code/{team_id}")
-    public ResponseEntity MakeTeamInviteCode(@PathVariable("team_id") Long teamId){
+    public ResponseEntity MakeTeamInviteCode(@PathVariable("team_id") String teamId){
         return new ResponseEntity<>(
                 new SingleResponseDto<>(service.makeInviteCode(teamId)), HttpStatus.OK);
     }
@@ -27,6 +27,12 @@ public class TeamController {
     @PostMapping("/code/valid")
     public ResponseEntity checkInviteCode(@RequestBody TeamDto.InviteCode code) {
         service.checkInviteCodeIsValid(code.getInviteCode());
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping
+    public ResponseEntity createTeam(@RequestBody TeamDto.Post post) {
+        service.createTeam(mapper.teamDtoPostToTeam(post));
         return ResponseEntity.ok().build();
     }
 

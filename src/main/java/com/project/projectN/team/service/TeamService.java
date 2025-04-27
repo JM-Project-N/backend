@@ -5,12 +5,14 @@ import com.project.projectN.exception.BusinessLogicException;
 import com.project.projectN.exception.ExceptionCode;
 import com.project.projectN.redis.RedisService;
 import com.project.projectN.team.dto.TeamDto;
+import com.project.projectN.team.entity.Team;
 import com.project.projectN.team.repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -20,7 +22,7 @@ public class TeamService {
     private final TeamRepository repository;
     private final RedisService redisService;
 
-    public TeamDto.InviteCode makeInviteCode(Long teamId) {
+    public TeamDto.InviteCode makeInviteCode(String teamId) {
         repository.findById(teamId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.BATTERY_CODE_NOT_FOUND));
 
@@ -55,5 +57,13 @@ public class TeamService {
     private String generateHex6() {
         int random = (int) (Math.random() * 0x1000000); // 0 ~ FFFFFF
         return String.format("%06X", random); // 대문자 6자리 hex
+    }
+
+    public void createTeam(Team team) {
+        Optional<Team> findTeam = repository.findById(team.getTeamId());
+        if(findTeam.isPresent()){
+            throw new BusinessLogicException(ExceptionCode.BATTERY_CODE_NOT_FOUND);
+        }
+        repository.save(team);
     }
 }

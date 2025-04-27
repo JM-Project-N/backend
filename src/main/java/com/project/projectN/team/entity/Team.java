@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 public class Team{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "team_id", nullable = false)
+    private String teamId;
 
     @Column(name = "member_id", nullable = false)
     private Long memberId;
@@ -24,8 +24,8 @@ public class Team{
     @Column(name = "create_at", nullable = false)
     private LocalDateTime createAt;
 
-    @Column(name = "name", length = 50, nullable = false)
-    private String name;
+    @Column(name = "team_name", length = 50, nullable = false)
+    private String teamName;
 
     @Column(name = "img", columnDefinition = "TEXT")
     private String img;
