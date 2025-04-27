@@ -8,4 +8,6 @@ import org.mapstruct.Mapper;
 public interface MemberMapper {
     Member userPostToUser(MemberDto.Post post);
     Member userPostTestToUser(MemberDto.TestPost post);
+
+    Member userPostLoginToUser(MemberDto.PostLogin postLogin);
 }
