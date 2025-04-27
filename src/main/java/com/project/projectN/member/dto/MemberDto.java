@@ -19,6 +19,14 @@ public class MemberDto {
     @Getter
     @Setter
     @NoArgsConstructor
+    public static class PostLogin{
+        private String email;
+        private String password;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
     public static class Post {
         @NotNull(message = "이름은 필수 항목입니다.")
         private String name;
@@ -78,5 +86,17 @@ public class MemberDto {
         private String nickname;
         private Member.RegistType registType;
         private Member.Status status;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class ResponseLogin {
+        private Boolean success;
+        private String token;
+        private Boolean isNewUser;
+        private String message;
     }
 }

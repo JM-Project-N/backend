@@ -62,7 +62,7 @@ public class TeamService {
     public void createTeam(Team team) {
         Optional<Team> findTeam = repository.findById(team.getTeamId());
         if(findTeam.isPresent()){
-            throw new BusinessLogicException(ExceptionCode.BATTERY_CODE_NOT_FOUND);
+            throw new BusinessLogicException(ExceptionCode.TEAM_ID_CONFLICT);
         }
         repository.save(team);
     }

@@ -17,21 +17,28 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class MemberController {
     private final static String USER_DEFAULT_URL = "/member";
-    private final MemberMapper memberMapper;
-    private final MemberService memberService;
+    private final MemberMapper mapper;
+    private final MemberService service;
 
     @PostMapping("/test")
     public ResponseEntity signUpMemberTest(@RequestBody MemberDto.TestPost requestBody){
         System.out.println("테스트");
-        Member member = memberMapper.userPostTestToUser(requestBody);
-        memberService.createUser(member);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Member member = mapper.userPostTestToUser(requestBody);
+        service.createUser(member);
+//        return new ResponseEntity<>(HttpStatus.OK);
+        MemberDto.ResponseLogin responseLogin = new MemberDto.ResponseLogin();
+        responseLogin.setToken("token");
+        responseLogin.setMessage("테스트 로그인 성공");
+        responseLogin.setIsNewUser(true);
+        responseLogin.setSuccess(true);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(responseLogin),HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity signUpMember(@Validated @RequestBody MemberDto.Post requestBody){
-        Member member = memberMapper.userPostToUser(requestBody);
-        memberService.createUser(member);
+    @PostMapping("/login")
+    public ResponseEntity signUpMember(@Validated @RequestBody MemberDto.PostLogin requestBody){
+        Member member = mapper.userPostLoginToUser(requestBody);
+        service.createUser(member);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
