@@ -12,4 +12,13 @@ public class TeamDto {
     public static class InviteCode {
         private String inviteCode;
     }
+
+    @Setter
+    @Getter
+    public static class Post {
+        private String teamId;
+        private Integer memberId;
+        private String name;
+        private String img;
+    }
 }
