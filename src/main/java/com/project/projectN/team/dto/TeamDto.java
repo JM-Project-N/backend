@@ -18,7 +18,7 @@ public class TeamDto {
     public static class Post {
         private String teamId;
         private Integer memberId;
-        private String name;
+        private String teamName;
         private String img;
     }
 }

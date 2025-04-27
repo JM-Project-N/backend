@@ -1,5 +1,6 @@
 package com.project.projectN.team.entity;
 
+import com.project.projectN.audit.Auditable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Team{
+public class Team extends Auditable {
 
     @Id
     @Column(name = "team_id", nullable = false)
@@ -20,9 +21,6 @@ public class Team{
 
     @Column(name = "member_id", nullable = false)
     private Long memberId;
-
-    @Column(name = "create_at", nullable = false)
-    private LocalDateTime createAt;
 
     @Column(name = "team_name", length = 50, nullable = false)
     private String teamName;
