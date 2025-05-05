@@ -19,10 +19,10 @@ public class MemberService {
         return repository.save(member);
     }
 
-    public Boolean loginUser(Member member) {
+    public Member loginUser(Member member) {
         Member findMember = repository.findByNameAndEmail(member.getName(), member.getEmail())
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-        return true;
+        return findMember;
 
     }
 
