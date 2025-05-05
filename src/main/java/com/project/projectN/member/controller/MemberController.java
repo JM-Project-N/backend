@@ -20,6 +20,12 @@ public class MemberController {
     private final MemberMapper mapper;
     private final MemberService service;
 
+    /**
+     * 회원가입 O auth 적용하기 전 테스트용
+     * POST : http://[api]/member/test
+     * @param requestBody
+     * @return
+     */
     @PostMapping("/test")
     public ResponseEntity signUpMemberTest(@RequestBody MemberDto.TestPost requestBody){
         System.out.println("테스트");
@@ -35,10 +41,20 @@ public class MemberController {
                 new SingleResponseDto<>(responseLogin),HttpStatus.OK);
     }
 
+    /**
+     * 회원 가입용 메서드
+     * POST : http://[api]/member/login
+     * @param requestBody
+     * @return
+     */
     @PostMapping("/login")
     public ResponseEntity signUpMember(@Validated @RequestBody MemberDto.PostLogin requestBody){
-        Member member = mapper.userPostLoginToUser(requestBody);
-        service.createUser(member);
+        Member member = service.loginUser(mapper.userPostLoginToUser(requestBody));
+        MemberDto.ResponseLogin responseLogin = new MemberDto.ResponseLogin();
+        responseLogin.setToken(String.valueOf(member.getId()));
+        responseLogin.setMessage("테스트 로그인 성공");
+        responseLogin.setIsNewUser(true);
+        responseLogin.setSuccess(true);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
