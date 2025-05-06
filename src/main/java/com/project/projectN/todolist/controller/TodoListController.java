@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class TodoListController {
 
-    @GetMapping("/{token}")
-    public ResponseEntity<?> getData(@PathVariable String token, @RequestParam String filter, @RequestParam int page) {
-        Pageable pageable = PageRequest.of(page - 1, 50);
-        Page<TodoList> =
-    }
+//    @GetMapping("/{token}")
+//    public ResponseEntity<?> getData(@PathVariable String token, @RequestParam String filter, @RequestParam int page) {
+//        Pageable pageable = PageRequest.of(page - 1, 50);
+//        Page<TodoList> =
+//    }
 }

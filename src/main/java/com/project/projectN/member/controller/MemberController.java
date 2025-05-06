@@ -5,9 +5,12 @@ import com.project.projectN.member.dto.MemberDto;
 import com.project.projectN.member.entity.Member;
 import com.project.projectN.member.mapper.MemberMapper;
 import com.project.projectN.member.service.MemberService;
+import com.project.projectN.redis.TokenService;
+import com.project.projectN.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +22,10 @@ public class MemberController {
     private final static String USER_DEFAULT_URL = "/member";
     private final MemberMapper mapper;
     private final MemberService service;
+
+    private final AuthenticationManager authManager;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final TokenService tokenService;
 
     /**
      * 회원가입 O auth 적용하기 전 테스트용

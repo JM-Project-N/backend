@@ -19,20 +19,20 @@ import org.springframework.transaction.annotation.Transactional;
 public class TodoListService {
     private final TodoListRepository repository;
 
-    public Page<TodoList> getTodoListPage(String token, String filter, Pageable pageable){
-        Sort sortBy = Sort.by("idx").ascending();
-        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sortBy);
-        Page<TodoList> result;
-        switch (filter){
-            case "my":
-                result = repository.findAllEmail();
-                break;
-            case "all":
-                result = repository.findAllTeamId();
-                break;
-            default:
-
-        }
-        return result;
-    }
+//    public Page<TodoList> getTodoListPage(String token, String filter, Pageable pageable){
+//        Sort sortBy = Sort.by("idx").ascending();
+//        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sortBy);
+//        Page<TodoList> result;
+//        switch (filter){
+//            case "my":
+//                result = repository.findAllEmail();
+//                break;
+//            case "all":
+//                result = repository.findAllTeamId();
+//                break;
+//            default:
+//
+//        }
+//        return result;
+//    }
 }
