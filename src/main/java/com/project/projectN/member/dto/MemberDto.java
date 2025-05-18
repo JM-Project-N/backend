@@ -27,6 +27,14 @@ public class MemberDto {
     @Getter
     @Setter
     @NoArgsConstructor
+    public static class PostLoginKakao{
+        private String email;
+        private Long Id;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
     public static class Post {
         @NotNull(message = "이름은 필수 항목입니다.")
         private String name;
