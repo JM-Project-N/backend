@@ -24,7 +24,7 @@ public class AuthService {
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public AuthDto.KakaoUserInfoDto getUserInfoFromAccessToken(String accessToken) {
+    public AuthDto.Response getUserInfoFromAccessToken(String accessToken) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + accessToken);
 
@@ -55,11 +55,11 @@ public class AuthService {
             AuthDto.Response ret = new AuthDto.Response();
             ret.setNickname(nickname);
             ret.setIsNewUser(isNewUser);
-            ret.setJwtToken("여기에추가해야함");
-            return userInfo;
+            ret.setJwtToken(issueJwtToken(email));
+            return ret;
 
         } catch (Exception e) {
-            throw new RuntimeException("카카오 사용자 정보 파싱 실패", e);
+            throw new BusinessLogicException(ExceptionCode.KAKAO_USER_INFO_PARSE_FAILED);
         }
     }
 

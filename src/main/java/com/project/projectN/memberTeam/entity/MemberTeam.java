@@ -25,7 +25,4 @@ public class MemberTeam {
 
     @Column(name = "role", length = 40, nullable = false)
     private String role;
-
-    @Column(name = "total_amount_of_money_in_month", nullable = false)
-    private Integer monthlyTotalSpending;
 }
