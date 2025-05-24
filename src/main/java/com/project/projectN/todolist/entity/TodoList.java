@@ -37,6 +37,6 @@ public class TodoList {
     @Column(name = "done")
     private Boolean done;
 
-    @Column(name = "private_view")
-    private Boolean privateView;
+    @Column(name = "public_todo")
+    private Boolean publicTodo;
 }
