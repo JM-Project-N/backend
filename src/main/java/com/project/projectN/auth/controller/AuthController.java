@@ -21,8 +21,15 @@ public class AuthController {
     private final AuthService service;
 
     @PostMapping("/kakao")
-    public ResponseEntity getAccessTokenValid(@RequestBody AuthDto.GetToken request) {
-        AuthDto.Response response = service.getUserInfoFromAccessToken(request.getAccessToken());
+    public ResponseEntity getAccessTokenValidForKakao(@RequestBody AuthDto.GetToken request) {
+        AuthDto.Response response = service.getUserInfoFromAccessTokenForKakao(request.getAccessToken());
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(response), HttpStatus.OK);
+    }
+
+    @PostMapping("/google")
+    public ResponseEntity getAccessTokenValidForGoogle(@RequestBody AuthDto.GetTokenForGoogle request) throws Exception {
+        AuthDto.Response response = service.loginWithGoogle(request.getIdToken());
         return new ResponseEntity<>(
                 new SingleResponseDto<>(response), HttpStatus.OK);
     }

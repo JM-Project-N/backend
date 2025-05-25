@@ -17,6 +17,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 @Slf4j
@@ -30,31 +32,35 @@ public class TodoListService extends ExtractMemberAndVerify {
         repository.save(todoList);
     }
 
-    public void patchTodoListItem(Long todoListId) {
+    public TodoList patchTodoListItem(TodoList todoList) {
         Member member = extractMemberFromPrincipal(memberRepository);
-        TodoList todoList = repository.findById(todoListId)
+        TodoList findTodoList = repository.findById(todoList.getTodoListId())
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.TODOLIST_NOT_FOUND));
-
-
+        return repository.save(todoList);
     }
 
-    public Page<TodoList> getTodoListPage(String filter, Pageable pageable, String teamId){
+    public void deleteTodoListItem(Long todoListId) {
+        Member member = extractMemberFromPrincipal(memberRepository);
+        TodoList findTodoList = repository.findByTodoListIdAndEmail(todoListId, member.getEmail())
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.TODOLIST_NOT_FOUND));
+        repository.delete(findTodoList);
+    }
+
+    public List<TodoList> getTodoListPage(String filter, String teamId){
         Member member = extractMemberFromPrincipal(memberRepository);
         Sort sortBy = Sort.by("idx").ascending();
-        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sortBy);
-        Page<TodoList> result;
+        List<TodoList> result;
         switch (filter){
             case "my":
                 result = repository
-                        .findByTeamIdAndEmail(teamId,member.getEmail(),pageable);
+                        .findByTeamIdAndEmail(teamId,member.getEmail(), sortBy); // 금일 유효 판단 필요
                 break;
             case "public":
                 result = repository
-                        .findByTeamIdAndPublicTodo(teamId,true,pageable);
+                        .findByTeamIdAndPublicTodo(teamId,true, sortBy); // 금일 유효 판단 필요
                 break;
-            default: //all
-                result = repository
-                        .findByTeamIdAndEmailOrTeamIdAndPublicTodo(teamId, member.getEmail(), teamId, true, pageable);
+            default:
+                throw new BusinessLogicException(ExceptionCode.BATTERY_CODE_NOT_FOUND); //수정필요
         }
         return result;
     }
