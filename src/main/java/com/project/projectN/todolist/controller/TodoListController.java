@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class TodoListController {
 
-    @GetMapping("/{token}")
-    public ResponseEntity<?> getData(@PathVariable String token, @RequestParam String filter) {
-    }
+//    @GetMapping("/{token}")
+//    public ResponseEntity<?> getData(@PathVariable String token, @RequestParam String filter) {
+//    }
 }

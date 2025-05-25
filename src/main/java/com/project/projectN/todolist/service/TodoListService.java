@@ -17,8 +17,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @Transactional
 @Slf4j
@@ -48,15 +46,15 @@ public class TodoListService extends ExtractMemberAndVerify {
         switch (filter){
             case "my":
                 result = repository
-                        .findAllTeamIdAndEmail(teamId,member.getEmail(),pageable);
+                        .findByTeamIdAndEmail(teamId,member.getEmail(),pageable);
                 break;
             case "public":
                 result = repository
-                        .findAllTeamIdAndPublicTodo(teamId,true,pageable);
+                        .findByTeamIdAndPublicTodo(teamId,true,pageable);
                 break;
             default: //all
                 result = repository
-                        .findByTeamIdAndEmailOrTeamIdAndIsPublic(teamId, member.getEmail(), teamId, true, pageable);
+                        .findByTeamIdAndEmailOrTeamIdAndPublicTodo(teamId, member.getEmail(), teamId, true, pageable);
         }
         return result;
     }
