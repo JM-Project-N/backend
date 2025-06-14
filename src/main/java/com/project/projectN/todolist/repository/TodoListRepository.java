@@ -1,14 +1,14 @@
 package com.project.projectN.todolist.repository;
 
 import com.project.projectN.todolist.entity.TodoList;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TodoListRepository extends JpaRepository<TodoList, Long> {
-    Page<TodoList> findAllTeamIdAndEmail(String teamId, String email, Pageable pageable);
-    Page<TodoList> findAllTeamIdAndPublicTodo(String teamId, Boolean publicTodo, Pageable pageable);
-    Page<TodoList> findByTeamIdAndEmailOrTeamIdAndIsPublic(String teamId1, String email, String teamId2, boolean isPublic, Pageable pageable);
+    Optional<TodoList> findByTodoListIdAndCreatedBy(Long todoListId, String createdBy);
+    List<TodoList> findByTeamIdAndCreatedBy(String teamId, String createdBy, Sort sort);
+    List<TodoList> findByTeamIdAndPublicTodo(String teamId, Boolean publicTodo, Sort sort);
 }

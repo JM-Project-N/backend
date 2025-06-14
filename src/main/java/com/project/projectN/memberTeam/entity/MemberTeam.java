@@ -1,5 +1,6 @@
 package com.project.projectN.memberTeam.entity;
 
+import com.project.projectN.memberTeam.entity.multiKey.memberTeamMk;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,19 +10,16 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@IdClass(memberTeamMk.class)
 public class MemberTeam {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_team_id")
-    private Long memberTeamId;
+    @Column(name = "email", nullable = false)
+    private String email;
 
-    @Column(name = "member_id", nullable = false)
-    private Long memberId;
-
+    @Id
     @Column(name = "team_id", nullable = false)
-    private Long teamId;
+    private String teamId;
 
     @Column(name = "role", length = 40, nullable = false)
     private String role;

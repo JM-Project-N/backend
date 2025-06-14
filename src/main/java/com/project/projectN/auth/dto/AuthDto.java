@@ -1,9 +1,6 @@
 package com.project.projectN.auth.dto;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 public class AuthDto {
 
@@ -17,6 +14,14 @@ public class AuthDto {
 
     @Data
     @NoArgsConstructor
+    public static class GetTokenForGoogle {
+        private String idToken;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
     public static class Response {
         private String jwtToken;
         private String nickname;

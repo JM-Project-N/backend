@@ -24,4 +24,15 @@ public class ExtractMemberAndVerify {
         return memberRepository.findByEmail(principal.toString())
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
+
+
+//    public Member variableCheckUserFromTeam(String email, String TeamId)  {
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        if(principal.equals("anonymousUser")) {
+//            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_MEMBER);
+//        }
+//
+//        return memberRepository.findByEmail(principal.toString())
+//                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+//    }
 }

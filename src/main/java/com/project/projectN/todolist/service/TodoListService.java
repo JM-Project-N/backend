@@ -10,9 +10,6 @@ import com.project.projectN.todolist.entity.TodoList;
 import com.project.projectN.todolist.repository.TodoListRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,36 +24,51 @@ public class TodoListService extends ExtractMemberAndVerify {
     private final TodoListRepository repository;
     private final MemberRepository memberRepository;
 
+    /**
+     * ToDoList 추가하는 메서드
+     * @param todoList
+     */
     public void addedTodoListItem(TodoList todoList) {
         Member member = extractMemberFromPrincipal(memberRepository);
         repository.save(todoList);
     }
 
-    public void patchTodoListItem(Long todoListId) {
+    /**
+     * TodoList의 ID를 받아와 존재하는지 여부를 파악 후 수정.
+     * @param todoList
+     * @return
+     */
+    public TodoList patchTodoListItem(TodoList todoList) {
         Member member = extractMemberFromPrincipal(memberRepository);
-        TodoList todoList = repository.findById(todoListId)
+        TodoList findTodoList = repository.findById(todoList.getTodoListId())
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.TODOLIST_NOT_FOUND));
-
-
+        if(!findTodoList.getTeamId().equals(todoList.getTeamId()))
+            throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND); // 수정 필요
+        return repository.save(todoList);
     }
 
-    public Page<TodoList> getTodoListPage(String filter, Pageable pageable, String teamId){
+    public void deleteTodoListItem(Long todoListId) {
         Member member = extractMemberFromPrincipal(memberRepository);
-        Sort sortBy = Sort.by("idx").ascending();
-        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sortBy);
-        Page<TodoList> result;
+        TodoList findTodoList = repository.findByTodoListIdAndCreatedBy(todoListId, member.getEmail())
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.TODOLIST_NOT_FOUND));
+        repository.delete(findTodoList);
+    }
+
+    public List<TodoList> getTodoListPage(String filter, String teamId){
+        Member member = extractMemberFromPrincipal(memberRepository);
+        Sort sortBy = Sort.by("todoListId").ascending();
+        List<TodoList> result;
         switch (filter){
             case "my":
                 result = repository
-                        .findAllTeamIdAndEmail(teamId,member.getEmail(),pageable);
+                        .findByTeamIdAndCreatedBy(teamId,member.getEmail(), sortBy); // 금일 유효 판단 필요
                 break;
             case "public":
                 result = repository
-                        .findAllTeamIdAndPublicTodo(teamId,true,pageable);
+                        .findByTeamIdAndPublicTodo(teamId,true, sortBy); // 금일 유효 판단 필요
                 break;
-            default: //all
-                result = repository
-                        .findByTeamIdAndEmailOrTeamIdAndIsPublic(teamId, member.getEmail(), teamId, true, pageable);
+            default:
+                throw new BusinessLogicException(ExceptionCode.BATTERY_CODE_NOT_FOUND); //수정필요
         }
         return result;
     }

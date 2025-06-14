@@ -2,15 +2,15 @@ package com.project.projectN.member.entity;
 
 import com.project.projectN.audit.Auditable;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
 @Entity(name = "member")
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Member extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,8 +41,6 @@ public class Member extends Auditable {
     @Column(name = "status", length = 100)
     @Enumerated(value = EnumType.STRING)
     private Status status = Status.NORMAL;
-
-
 
 
     ///어떠한 방식으로 회원가입을 진행했는지

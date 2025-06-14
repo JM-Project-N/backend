@@ -1,4 +1,5 @@
 package com.project.projectN.todolist.entity;
+import com.project.projectN.audit.Auditable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Table(name = "todolist")
-public class TodoList {
+public class TodoList extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,12 +19,6 @@ public class TodoList {
 
     @Column(name = "team_id", length = 50)
     private String teamId;
-
-    @Column(name = "email", length = 30)
-    private String email;
-
-    @Column(name = "idx", nullable = false)
-    private Long idx;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -34,8 +29,8 @@ public class TodoList {
     @Column(name = "repeat_description", length = 100)
     private String repeatDescription;
 
-    @Column(name = "done")
-    private Boolean done;
+    @Column(name = "done", length = 30)
+    private String done;
 
     @Column(name = "public_todo")
     private Boolean publicTodo;
