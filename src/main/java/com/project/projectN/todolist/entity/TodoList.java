@@ -31,6 +31,8 @@ public class TodoList extends Auditable {
 
     @Column(name = "done", length = 30)
     private String done;
+    // ready : 금일 해야하는 일임.
+    // 
 
     @Column(name = "public_todo")
     private Boolean publicTodo;
